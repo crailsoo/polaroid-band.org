@@ -1,0 +1,64 @@
+name: Unpack site and fix Cloudflare deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Unpack uploaded website package
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -f public/POLAROID_cloudflare_github.zip ]; then
+            echo "Website package ZIP is not present; nothing to unpack."
+            exit 0
+          fi
+          unzip -o public/POLAROID_cloudflare_github.zip -d .
+          rm -f public/POLAROID_cloudflare_github.zip
+
+      - name: Add Wrangler static-assets configuration
+        shell: bash
+        run: |
+          cat > wrangler.jsonc <<'EOF'
+          {
+            "$schema": "node_modules/wrangler/config-schema.json",
+            "name": "polaroid-band-org",
+            "compatibility_date": "2026-08-24",
+            "assets": {
+              "directory": "./public"
+            }
+          }
+          EOF
+
+      - name: Verify website output
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f public/index.html
+          test -f public/POLAROID_EPK_2026_EN.pdf
+          test -d public/assets/images
+          echo "Website files are present and ready for Wrangler."
+
+      - name: Commit fixed deployment structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/unpack-and-fix-cloudflare.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Fix Cloudflare static site deployment"
+            git push
+          fi
