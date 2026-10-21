@@ -1901,32 +1901,6 @@
      POLARØID — COMPLETE SITE UPGRADE
      ========================================================= */
 
-  /* Browser / signal atmosphere */
-  .signal-sweep {
-    position: absolute;
-    inset: -20% 0;
-    background:
-      linear-gradient(180deg,
-        transparent 0%,
-        transparent 46%,
-        rgba(145,182,200,.02) 47%,
-        rgba(200,255,0,.10) 49%,
-        rgba(143,108,255,.07) 50%,
-        transparent 53%,
-        transparent 100%);
-    transform: translateY(-45%);
-    animation: signalSweep 12s cubic-bezier(.45,0,.55,1) infinite;
-    mix-blend-mode: screen;
-    opacity: .75;
-  }
-
-  @keyframes signalSweep {
-    0%, 72% { transform: translateY(-52%); opacity: 0; }
-    74% { opacity: .9; }
-    82% { transform: translateY(45%); opacity: .75; }
-    84%, 100% { transform: translateY(55%); opacity: 0; }
-  }
-
   /* Mobile fullscreen menu */
   .menu-toggle {
     display: none;
@@ -2378,7 +2352,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .signal-sweep,
     .lyric-track {
       animation: none !important;
     }
@@ -2629,7 +2602,6 @@
 
 <div class="site-atmosphere" aria-hidden="true">
   <div class="signal-lines"></div>
-  <div class="signal-sweep"></div>
   <div class="bg-word">POLARØID</div>
   <div class="ambient-orb violet"></div>
   <div class="ambient-orb ice"></div>
