@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#090a0b" />
+<meta name="theme-color" content="#000000" />
 <meta name="color-scheme" content="dark" />
 <title>POLARØID — Alternative Rock · Grunge · Nu-Metal</title>
 <meta name="description" content="POLARØID — Alternative Rock, Grunge and Nu-Metal. VICTIM, live shows, gallery, socials and booking." />
@@ -35,7 +35,7 @@
 /* POLAROID_CUSTOM_FONT_END */
 
   :root {
-    --bg: #070708;
+    --bg: #000;
     --ink: #ecece7;
     --muted: #8e9496;
     --acid: #c8ff00;
@@ -2595,6 +2595,33 @@
   .previous-release > div { min-width: 0; }
   .previous-release .player::before { content: none; }
   .previous-release .soundcloud-head, .previous-release .soundcloud-gate { flex-wrap: wrap; }
+
+
+  /* Plain black page background */
+  html,
+  body,
+  main,
+  main > section,
+  #contact,
+  footer,
+  .nav.scrolled,
+  .mobile-menu {
+    background: #000;
+  }
+
+  .site-atmosphere,
+  body::before,
+  body::after,
+  .hero::before,
+  .hero::after,
+  .hero .logo-wrap::after,
+  #music::before,
+  #live::before,
+  #gallery::before,
+  #socials::before,
+  #contact::before {
+    display: none;
+  }
 
 </style>
 </head>
