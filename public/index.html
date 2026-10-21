@@ -13,10 +13,10 @@
 <meta name="theme-color" content="#090a0b" />
 <meta name="color-scheme" content="dark" />
 <title>POLARØID — Alternative Rock · Grunge · Nu-Metal</title>
-<meta name="description" content="POLARØID — Alternative Rock, Grunge and Nu-Metal. FREE MY MIND, live shows, gallery, socials and booking." />
+<meta name="description" content="POLARØID — Alternative Rock, Grunge and Nu-Metal. VICTIM, live shows, gallery, socials and booking." />
 <meta name="robots" content="index,follow" />
 <meta property="og:title" content="POLARØID — NOTHING STAYS CLEAR." />
-<meta property="og:description" content="Alternative Rock · Grunge · Nu-Metal // FREE MY MIND out now." />
+<meta property="og:description" content="Alternative Rock · Grunge · Nu-Metal // VICTIM · 23 October 2026." />
 <meta property="og:type" content="website" />
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="manifest" href="site.webmanifest" />
@@ -2673,50 +2673,21 @@
       <div class="section-label reveal left">01 / MUSIC</div>
       <h2 class="section-title reveal up">Latest<br>Release.</h2>
       <div class="music-grid">
-        <div class="cover cover-art reveal left" aria-label="FREE MY MIND Cover">
-            <img class="release-cover-image" src="assets/images/free-my-mind-cover.webp" alt="Cover artwork for FREE MY MIND" />
-          </div>
+        <div class="cover cover-art reveal left" aria-label="VICTIM Cover">
+          <img class="release-cover-image" src="https://d1l1gotk1xybsc.cloudfront.net/eyJrZXkiOiI2MTc5NTNcL2I4NTY3ZjhhLThlMjUtNDQyMy04NzhjLWIwYjVmMzkxYjk2YiIsImJ1Y2tldCI6InJvdXRlbm90ZS1wdXNoIiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvbnRhaW4iLCJ3aWR0aCI6bnVsbCwiaGVpZ2h0Ijo1NDB9fX0=" alt="Cover artwork for VICTIM by POLARØID" />
+        </div>
         <div>
-          <div class="release-meta reveal right">LATEST RELEASE / SOUNDCLOUD</div>
+          <div class="release-meta reveal right">LATEST RELEASE / SPOTIFY</div>
           <div class="release-archive reveal right reveal-delay-1">
-            <span>01 / FREE MY MIND</span><span>STATUS: OUT NOW</span><span>2026</span>
+            <span>SINGLE / VICTIM</span><span id="victimReleaseStatus">STATUS: COMING SOON</span><span><time datetime="2026-10-23">23.10.2026</time></span>
           </div>
-          <div class="release-title reveal right reveal-delay-1">FREE MY<br>MIND</div>
+          <div class="release-title reveal right reveal-delay-1">VICTIM</div>
           <p class="release-text reveal right reveal-delay-2">
-            Our first release <strong>FREE MY MIND</strong> is out now on SoundCloud.
-            Listen here or open the track directly on SoundCloud.
+            Our new single <strong>VICTIM</strong>.<br>
+            Available on Spotify from <time datetime="2026-10-23">23 October 2026</time>.
           </p>
-          <div class="player soundcloud-player reveal up reveal-delay-3" id="player">
-            <div class="soundcloud-head">
-              <span>POLARØID AUDIO UNIT // SC-01</span>
-              <a href="https://soundcloud.com/polaroid-401262218/free-my-mind" target="_blank" rel="noopener noreferrer">OPEN SOUNDCLOUD ↗</a>
-            </div>
-            <div class="soundcloud-gate" id="soundcloudGate">
-              <div class="soundcloud-gate-copy">
-                <strong>FREE MY MIND</strong>
-                <span>The SoundCloud player loads after you click.</span>
-              </div>
-              <button class="soundcloud-load-btn" id="loadSoundcloud" type="button">LOAD PLAYER</button>
-            </div>
-            <div class="soundcloud-embed-slot" id="soundcloudEmbedSlot"></div>
-            <template id="soundcloudTemplate">
-              <iframe
-                class="soundcloud-frame"
-                width="100%"
-                height="166"
-                scrolling="no"
-                frameborder="0"
-                allow="autoplay"
-                title="POLARØID — Free My Mind on SoundCloud"
-                src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fpolaroid-401262218%2Ffree-my-mind&color=%23c8ff00&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false">
-              </iframe>
-            </template>
-            <noscript>
-              <a href="https://soundcloud.com/polaroid-401262218/free-my-mind" target="_blank" rel="noopener noreferrer">OPEN FREE MY MIND ON SOUNDCLOUD</a>
-            </noscript>
-          </div>
-          <div class="streaming reveal up reveal-delay-4">
-            <a href="https://soundcloud.com/polaroid-401262218/free-my-mind" target="_blank" rel="noopener noreferrer">SOUNDCLOUD ↗</a>
+          <div class="streaming reveal up reveal-delay-3">
+            <a id="victimSpotifyLink" href="https://push.fm/ps/pntpskc5" target="_blank" rel="noopener noreferrer">PRE-SAVE ON SPOTIFY ↗</a>
           </div>
         </div>
       </div>
@@ -2972,19 +2943,23 @@
 
   revealElements.forEach((element) => revealObserver.observe(element));
 
-  const loadSoundcloud = document.getElementById('loadSoundcloud');
-  const soundcloudTemplate = document.getElementById('soundcloudTemplate');
-  const soundcloudEmbedSlot = document.getElementById('soundcloudEmbedSlot');
-  const soundcloudGate = document.getElementById('soundcloudGate');
-
-  if (loadSoundcloud && soundcloudTemplate && soundcloudEmbedSlot && soundcloudGate) {
-    loadSoundcloud.addEventListener('click', () => {
-      if (!soundcloudEmbedSlot.querySelector('iframe')) {
-        soundcloudEmbedSlot.appendChild(soundcloudTemplate.content.cloneNode(true));
-      }
-      soundcloudGate.classList.add('loaded');
-    });
-  }
+  // Switch from pre-save to the Spotify release on 23 October (Europe/Berlin).
+  const victimReleaseDate = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Berlin', year: 'numeric', month: '2-digit', day: '2-digit'
+  });
+  const updateVictimRelease = () => {
+    const parts = Object.fromEntries(victimReleaseDate.formatToParts(new Date()).map(({ type, value }) => [type, value]));
+    if (`${parts.year}-${parts.month}-${parts.day}` < '2026-10-23') return;
+    const status = document.getElementById('victimReleaseStatus');
+    const link = document.getElementById('victimSpotifyLink');
+    if (status) status.textContent = 'STATUS: OUT NOW';
+    if (link) {
+      link.href = 'https://open.spotify.com/album/3SLmQufMSxjzizWsha42lw';
+      link.textContent = 'LISTEN ON SPOTIFY ↗';
+    }
+  };
+  updateVictimRelease();
+  window.setInterval(updateVictimRelease, 60000);
 
   // Mobile fullscreen menu
   const menuToggle = document.getElementById('menuToggle');
