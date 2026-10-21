@@ -2598,6 +2598,30 @@
     }
   }
 
+
+/* OCT 2026 — PURE BLACK BACKGROUND (original website layout retained) */
+:root { --bg: #000000; }
+html, body {
+  background: #000000 !important;
+  background-image: none !important;
+}
+.site-atmosphere,
+body::before,
+.hero::before,
+.hero::after,
+#music::before,
+#live::before,
+#gallery::before,
+#socials::before,
+#contact::before {
+  display: none !important;
+}
+.hero, #music, #live, #gallery, #socials, #contact {
+  background: transparent !important;
+  background-image: none !important;
+}
+.nav.scrolled { background: rgba(0,0,0,.94); }
+
 </style>
 </head>
 <body>
@@ -2724,14 +2748,7 @@
   </section>
 
 
-  <section class="lyric-interlude" aria-label="Free My Mind transmission">
-    <div class="lyric-track" aria-hidden="true">POLARØID / SIGNAL / POLARØID / SIGNAL / POLARØID / SIGNAL</div>
-    <div class="container">
-      <div class="lyric-kicker reveal left">TRANSMISSION / FREE MY MIND</div>
-      <div class="lyric-line reveal scale">FREE MY MIND.</div>
-      <div class="lyric-code reveal right">SC-01 // NOTHING STAYS CLEAR.</div>
-    </div>
-  </section>
+  
 
   <section id="live">
     <div class="container">
