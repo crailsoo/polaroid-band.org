@@ -2598,6 +2598,27 @@
     }
   }
 
+
+  /* Collapsible release archive */
+  .previous-releases { margin-top: 48px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .previous-releases > summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 22px 0; list-style: none; cursor: pointer;
+    color: var(--ink); font: 700 .7rem var(--mono); letter-spacing: .12em;
+  }
+  .previous-releases > summary::-webkit-details-marker { display: none; }
+  .previous-releases > summary::after { content: "+"; color: var(--acid); font-size: 1.3rem; }
+  .previous-releases[open] > summary::after { content: "−"; }
+  .previous-releases > summary:hover { color: var(--acid); }
+  .previous-releases > summary:focus-visible { outline: 2px solid var(--acid); outline-offset: 6px; }
+  .previous-release { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 32px; align-items: center; padding: 8px 0 30px; }
+  .previous-release-cover { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; display: block; border: 1px solid var(--line); }
+  .previous-release-title { margin: 12px 0; font: 900 clamp(2rem, 4vw, 3.5rem)/1 var(--display); letter-spacing: .01em; }
+  @media (max-width: 600px) {
+    .previous-release { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .previous-release-cover { max-width: 280px; }
+  }
+
 </style>
 </head>
 <body>
@@ -2689,6 +2710,21 @@
           </div>
         </div>
       </div>
+
+      <details class="previous-releases">
+        <summary>PREVIOUS RELEASES</summary>
+        <article class="previous-release" aria-labelledby="freeMyMindTitle">
+          <img class="previous-release-cover" src="assets/images/free-my-mind-cover.webp" alt="Cover artwork for FREE MY MIND by POLARØID" loading="lazy" width="600" height="600" />
+          <div>
+            <div class="release-meta">SINGLE / 2026 / SOUNDCLOUD</div>
+            <h3 class="previous-release-title" id="freeMyMindTitle">FREE MY MIND</h3>
+            <p class="release-text">Our first release <strong>FREE MY MIND</strong> is out now on SoundCloud.</p>
+            <div class="streaming">
+              <a href="https://soundcloud.com/polaroid-401262218/free-my-mind" target="_blank" rel="noopener noreferrer">LISTEN ON SOUNDCLOUD ↗</a>
+            </div>
+          </div>
+        </article>
+      </details>
     </div>
   </section>
 
