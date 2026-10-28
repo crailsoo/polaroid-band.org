@@ -2639,25 +2639,59 @@
   }
 
 
-  /* Keep the upcoming concert's event name visible on mobile. */
-  @media (max-width: 900px) {
-    #live .show.next-show .show-venue {
-      display: block;
-      grid-column: 3 / -1;
+  /* Mobile event list: two clear columns, no squeezed date or missing venue. */
+  @media (max-width: 760px) {
+    #live .show {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      column-gap: 14px;
+      row-gap: 8px;
+      align-items: start;
+      padding: 22px 0;
+    }
+    #live .show > * { min-width: 0; }
+    #live .show .show-index {
+      grid-column: 1;
+      grid-row: 1;
+      font-size: .6rem;
+      align-self: center;
+    }
+    #live .show .show-status {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+      font-size: .56rem !important;
+      padding: 5px 7px;
+      white-space: nowrap;
+    }
+    #live .show .show-date {
+      grid-column: 1;
       grid-row: 2;
+      font-size: 1.1rem !important;
+      white-space: nowrap;
+    }
+    #live .show .ticket {
+      grid-column: 2;
+      grid-row: 2;
+      justify-self: end;
+      align-self: center;
+      font-size: .65rem !important;
+      white-space: nowrap;
+    }
+    #live .show .show-city {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      font-size: .95rem;
+    }
+    #live .show .show-venue {
+      display: block;
+      grid-column: 1 / -1;
+      grid-row: 4;
+      font-size: .82rem;
+      line-height: 1.5;
       overflow-wrap: anywhere;
     }
-  }
-  @media (max-width: 760px) {
-    #live .show.next-show {
-      grid-template-columns: 38px 74px minmax(0, 1fr) !important;
-    }
-    #live .show.next-show .show-index { grid-column: 1; grid-row: 1; }
-    #live .show.next-show .show-status { grid-column: 2; grid-row: 1; }
-    #live .show.next-show .show-date { grid-column: 3; grid-row: 1; }
-    #live .show.next-show .show-city { grid-column: 2; grid-row: 2; }
-    #live .show.next-show .show-venue { grid-column: 3; grid-row: 2; font-size: .85rem; }
-    #live .show.next-show .ticket { grid-column: 3; grid-row: 3; }
+    #live .show:hover { padding-left: 0; }
   }
 
 </style>
