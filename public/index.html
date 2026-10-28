@@ -2638,6 +2638,28 @@
     .hero .actions.reveal { transition: none; }
   }
 
+
+  /* Keep the upcoming concert's event name visible on mobile. */
+  @media (max-width: 900px) {
+    #live .show.next-show .show-venue {
+      display: block;
+      grid-column: 3 / -1;
+      grid-row: 2;
+      overflow-wrap: anywhere;
+    }
+  }
+  @media (max-width: 760px) {
+    #live .show.next-show {
+      grid-template-columns: 38px 74px minmax(0, 1fr) !important;
+    }
+    #live .show.next-show .show-index { grid-column: 1; grid-row: 1; }
+    #live .show.next-show .show-status { grid-column: 2; grid-row: 1; }
+    #live .show.next-show .show-date { grid-column: 3; grid-row: 1; }
+    #live .show.next-show .show-city { grid-column: 2; grid-row: 2; }
+    #live .show.next-show .show-venue { grid-column: 3; grid-row: 2; font-size: .85rem; }
+    #live .show.next-show .ticket { grid-column: 3; grid-row: 3; }
+  }
+
 </style>
 </head>
 <body>
@@ -2767,13 +2789,13 @@
       <h2 class="section-title reveal up">Live<br>Shows.</h2>
       <div class="shows reveal up reveal-delay-1">
         <!-- Später einfach weitere .show-Blöcke hinzufügen -->
-        <div class="show">
+        <div class="show next-show">
           <div class="show-index">NEXT</div>
           <div class="show-status upcoming">UPCOMING</div>
-          <div class="show-date">TBA</div>
-          <div class="show-city">Next Show</div>
-          <div class="show-venue">Details coming soon</div>
-          <div class="ticket">STAY TUNED →</div>
+          <div class="show-date">27.11.2026</div>
+          <div class="show-city">Niebüll</div>
+          <div class="show-venue">Hausmusikabend · Mensa der Friedrich-Paulsen-Schule</div>
+          <div class="ticket">19:00 UHR</div>
         </div>
 
         <div class="show played-show">
