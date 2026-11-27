@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="A chronological archive of POLARØID's past live shows.">
+<meta name="description" content="All POLARØID live dates, past and future.">
 <title>POLARØID</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
@@ -194,11 +194,13 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   <header>
     <h1>POLARØID</h1>
   </header>
-  <ol class="timeline" id="timeline" aria-label="Past live shows, oldest first">
+  <ol class="timeline" id="timeline" aria-label="All live shows, oldest first">
       <li><time datetime="2026-06-27" title="2026-06-27">JUN 27</time><div class="record"><h2>Stadthalle Niebüll</h2><p>Niebüll</p></div></li>
       <li class="month-start"><time datetime="2026-07-01" title="2026-07-01">JUL 01</time><div class="record"><h2>Friedrich-Paulsen-Schule</h2><p>Niebüll</p></div></li>
       <li class="month-start"><time datetime="2026-08-07" title="2026-08-07">AUG 07</time><div class="record"><h2>Silberhochzeit</h2><p>Klanxbüll</p></div></li>
       <li><time datetime="2026-08-09" title="2026-08-09">AUG 09</time><div class="record"><h2>Skandalös Festival</h2><p>Neukirchen</p></div></li>
+      <li class="month-start"><time datetime="2026-11-27" title="2026-11-27">NOV 27</time><div class="record"><h2>Hausmusikabend · Mensa der Friedrich-Paulsen-Schule</h2><p>Niebüll</p></div></li>
+      <li class="month-start year-start" data-year="2027"><time datetime="2027-06-25" title="2027-06-25">JUN 25</time><div class="record"><h2>Hang &amp; Klang Festival</h2><p>Ramstedt</p></div></li>
   </ol>
   <p class="note" id="archive-note" role="status" hidden></p>
 </main>
@@ -238,15 +240,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     "place": "Ramstedt"
   }
 ];
-  const formatter=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Berlin',year:'numeric',month:'2-digit',day:'2-digit'});
-  const today=()=>{const p=Object.fromEntries(formatter.formatToParts(new Date()).map(v=>[v.type,v.value]));return p.year+'-'+p.month+'-'+p.day;};
   const render=events=>{
-    const cutoff=today();
-    const past=events.filter(el=>el.date<cutoff).sort((a,b)=>a.date.localeCompare(b.date));
+    const shows=[...events].sort((a,b)=>a.date.localeCompare(b.date));
     const fragment=document.createDocumentFragment();
     let previousMonth='',previousYear='';
     const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-    past.forEach(el=>{
+    shows.forEach(el=>{
       const li=document.createElement('li');
       const time=document.createElement('time');
       const date=el.date,month=date.slice(0,7),year=date.slice(0,4);
@@ -263,8 +262,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       record.append(title,place);li.append(time,record);fragment.append(li);
     });
     timeline.replaceChildren(fragment);
-    note.hidden=!!past.length;
-    note.textContent=past.length?'':'No past shows yet.';
+    note.hidden=!!shows.length;
+    note.textContent=shows.length?'':'No shows announced yet.';
   };
   let events=savedEvents;
   render(events);
@@ -280,7 +279,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     }catch(e){render(events);}
   };
   update();
-  window.setInterval(()=>render(events),60000);
 })();
 </script>
 </body>
