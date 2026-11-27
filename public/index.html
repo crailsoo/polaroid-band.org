@@ -2944,6 +2944,46 @@ body .mobile-menu nav a span{font-size:clamp(23px,5.4vw,36px)!important}
  #live .live-list .live-event .live-time{grid-column:2;grid-row:3}
 }
 
+
+/* STABLE SCROLL REVEAL — preserve print filters and use consistent entry/exit timing. */
+body .reveal{
+ opacity:0;transition-property:opacity,transform!important;
+ transition-duration:.48s,.65s!important;
+ transition-timing-function:ease,cubic-bezier(.16,1,.3,1)!important;
+ transition-delay:0s!important;will-change:opacity,transform;
+}
+body .reveal.up{transform:translate3d(0,38px,0)}
+body .reveal.left{transform:translate3d(-40px,0,0)}
+body .reveal.right{transform:translate3d(40px,0,0)}
+body .reveal.scale{transform:scale(.94)}
+body .reveal.visible{opacity:1;transform:none}
+body .reveal.visible.reveal-delay-1{transition-delay:.07s!important}
+body .reveal.visible.reveal-delay-2{transition-delay:.12s!important}
+body .reveal.visible.reveal-delay-3{transition-delay:.17s!important}
+body .reveal.visible.reveal-delay-4{transition-delay:.22s!important}
+body .hero .actions.reveal,body.hero-buttons-visible .hero .actions.reveal{
+ opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,20px,0);
+ transition-property:opacity,transform,visibility!important;
+}
+body .hero .actions.reveal.visible,body.hero-buttons-visible .hero .actions.reveal.visible{
+ opacity:1;visibility:visible;pointer-events:auto;transform:none;
+}
+body .hero .logo-wrap.reveal{filter:none}
+body .section-title.reveal,body .release-title.reveal{filter:url(#crisp-heading-ink)}
+body .release-text.reveal,body .release-meta.reveal,body .release-archive.reveal{filter:url(#preview-print-wear)}
+body .social-link.reveal:not(.visible){pointer-events:none}
+@media(max-width:760px){
+ body .reveal.up{transform:translate3d(0,30px,0)}
+ body .reveal.left{transform:translate3d(-22px,0,0)}
+ body .reveal.right{transform:translate3d(22px,0,0)}
+ body .reveal.visible{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+ body .reveal,body .reveal.visible,body .hero .actions.reveal,body.hero-buttons-visible .hero .actions.reveal{
+ opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important;transition:none!important;
+ }
+}
+
 </style>
 <!-- Syne Mono license:
 Copyright 2017 The Syne Project Authors (https://gitlab.com/bonjour-monde/fonderie/syne-typeface)
@@ -3198,7 +3238,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       </div>
 
       <details class="previous-releases">
-        <summary>PREVIOUS RELEASES</summary>
+        <summary class="reveal up">PREVIOUS RELEASES</summary>
         <article class="previous-release" aria-labelledby="freeMyMindTitle">
           <img class="previous-release-cover" src="assets/images/free-my-mind-cover.webp" alt="Cover artwork for FREE MY MIND by POLARØID" loading="lazy" width="600" height="600" />
           <div>
@@ -3239,8 +3279,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <div class="container">
       <div class="section-label reveal left">02 / LIVE</div>
       <h2 class="section-title reveal up">Live Shows.</h2>
-      <div class="live-schedule reveal up reveal-delay-1">
-        <section class="live-group" aria-labelledby="live-upcoming-title">
+      <div class="live-schedule">
+        <section class="live-group reveal up reveal-delay-1" aria-labelledby="live-upcoming-title">
           <h3 class="live-group-title" id="live-upcoming-title">Upcoming shows</h3>
           <ul class="live-list" id="live-upcoming">
           <li class="live-event live-event-next" data-date="2026-11-27">
@@ -3264,7 +3304,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           </ul>
           <p class="live-empty" id="live-empty" hidden>No upcoming shows announced yet.</p>
         </section>
-        <section class="live-group live-archive" aria-labelledby="live-archive-title">
+        <section class="live-group live-archive reveal up reveal-delay-1" aria-labelledby="live-archive-title">
           <div class="live-archive-heading">
             <h3 class="live-group-title" id="live-archive-title">Past shows</h3>
             <a class="live-archive-link" href="live-archive.html">Live archive ↗</a>
@@ -3365,14 +3405,14 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     <div class="container">
       <div class="section-label reveal left">04 / SOCIALS</div>
       
-      <div class="social-links reveal up reveal-delay-1">
-        <a class="social-link" href="https://www.instagram.com/polaroid_band_nf/" target="_blank" rel="noopener noreferrer">
+      <div class="social-links">
+        <a class="social-link reveal up reveal-delay-1" href="https://www.instagram.com/polaroid_band_nf/" target="_blank" rel="noopener noreferrer">
           <span>INSTAGRAM</span><small>OPEN ↗</small>
         </a>
-        <a class="social-link" href="https://www.tiktok.com/@polarid41" target="_blank" rel="noopener noreferrer">
+        <a class="social-link reveal up reveal-delay-1" href="https://www.tiktok.com/@polarid41" target="_blank" rel="noopener noreferrer">
           <span>TIKTOK</span><small>OPEN ↗</small>
         </a>
-        <a class="social-link" href="https://open.spotify.com/artist/7q5Am0RmC5OmvCEUeTq8J2" target="_blank" rel="noopener noreferrer">
+        <a class="social-link reveal up reveal-delay-1" href="https://open.spotify.com/artist/7q5Am0RmC5OmvCEUeTq8J2" target="_blank" rel="noopener noreferrer">
           <span>SPOTIFY</span><small>OPEN ↗</small>
         </a>
       </div>
@@ -3482,22 +3522,58 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   window.addEventListener('scroll', updateHeroButtons, { passive: true });
   updateHeroButtons();
 
-  const revealElements = document.querySelectorAll('.reveal');
-
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      } else {
-        entry.target.classList.remove('visible');
+  // Stable scroll reveal: measure layout positions, not animated transforms.
+  const revealElements = [...document.querySelectorAll('.reveal')];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let revealFrame = 0;
+  const layoutTop = (element) => {
+    let top = 0;
+    for (let node = element; node; node = node.offsetParent) top += node.offsetTop || 0;
+    return top;
+  };
+  const updateReveals = () => {
+    revealFrame = 0;
+    const scroll = window.scrollY || document.documentElement.scrollTop || 0;
+    const height = window.innerHeight;
+    const states = revealElements.map(element => {
+      const collapse = element.closest('.gallery-collapse');
+      const details = element.closest('details:not([open])');
+      const available = element.getClientRects().length > 0 &&
+        (!collapse || collapse.classList.contains('open')) &&
+        (!details || element === details || !!element.closest('summary'));
+      if (!available) return [element, false];
+      if (reducedMotion.matches) return [element, true];
+      const top = layoutTop(element) - scroll;
+      let bottom = top + element.offsetHeight;
+      if (collapse) {
+        const clip = collapse.getBoundingClientRect();
+        if (top >= clip.bottom || bottom <= clip.top) return [element, false];
+        bottom = Math.min(bottom, clip.bottom);
       }
+      const wasVisible = element.classList.contains('visible');
+      const visible = wasVisible
+        ? top < height * .98 && bottom > -24
+        : top < height * .88 && bottom > 12;
+      return [element, visible];
     });
-  }, {
-    threshold: 0.14,
-    rootMargin: '0px 0px -8% 0px'
-  });
-
-  revealElements.forEach((element) => revealObserver.observe(element));
+    states.forEach(([element, visible]) => element.classList.toggle('visible', visible));
+  };
+  const queueReveals = () => {
+    if (!revealFrame) revealFrame = requestAnimationFrame(updateReveals);
+  };
+  window.addEventListener('scroll', queueReveals, {passive:true});
+  window.addEventListener('resize', queueReveals, {passive:true});
+  window.addEventListener('load', queueReveals);
+  window.addEventListener('pageshow', queueReveals);
+  document.addEventListener('toggle', queueReveals, true);
+  document.addEventListener('transitionend', queueReveals, true);
+  reducedMotion.addEventListener?.('change', queueReveals);
+  if ('ResizeObserver' in window) {
+    const revealResize = new ResizeObserver(queueReveals);
+    document.querySelectorAll('main > section, #contact, .gallery-collapse, .previous-releases').forEach(el => revealResize.observe(el));
+  }
+  document.fonts?.ready.then(queueReveals);
+  queueReveals();
 
   // Switch from pre-save to the Spotify release on 23 October (Europe/Berlin).
   const victimReleaseDate = new Intl.DateTimeFormat('en-CA', {
