@@ -2855,6 +2855,37 @@ main>section:not(.hero),#contact{padding:44px 0!important}
 }
 @media(prefers-reduced-motion:reduce){.hero .actions.reveal:not(.visible){opacity:1;transform:none}.section-title.reveal.visible{filter:none}}
 
+
+/* COMPACT PRINT TYPOGRAPHY — use the approved archive's actual optical scale. */
+body{font-size:clamp(13px,1.65vw,16px)}
+.section-title,.release-title,.previous-release-title,.imprint-box h3{
+  font-size:clamp(18px,2.7vw,28px)!important;
+  line-height:1.18!important;letter-spacing:-.025em!important;
+  text-transform:uppercase;font-weight:400!important;
+  -webkit-text-stroke:.26px currentColor;
+}
+.section-title{margin-bottom:20px!important}
+.social-link{font-size:clamp(16px,2.1vw,22px)!important;letter-spacing:-.025em!important;line-height:1.2!important}
+.social-link>span{font-size:inherit!important}
+.release-text,.contact-note p,.contact-row a,.contact-row strong,.imprint-grid dd,.imprint-grid dt{
+  font-size:clamp(13px,1.65vw,16px)!important;letter-spacing:-.015em!important;line-height:1.45!important
+}
+.release-meta,.release-archive span,.streaming a,.btn,.scroll-note,.gallery-toggle,.epk-download,.menu-toggle,.previous-releases>summary,.soundcloud-head,.soundcloud-load-btn,.imprint-link{
+  font-size:clamp(11px,1.55vw,14px)!important;letter-spacing:-.02em!important;line-height:1.25!important
+}
+.mobile-menu nav a span{font-size:clamp(22px,5.7vw,36px)!important;letter-spacing:-.025em!important;line-height:1.2!important}
+.soundcloud-gate-copy strong{font-size:14px!important}
+.section-title.reveal.visible,.release-title.reveal.visible,.section-title:not(.reveal),.release-title:not(.reveal),.previous-release-title,.imprint-box h3,.mobile-menu nav a span{filter:url(#heading-print-wear);-webkit-text-stroke:.26px currentColor;text-shadow:none!important}
+.release-text:not(.reveal),.release-text.reveal.visible,.contact-note p,.contact-note small,.contact-row a,.contact-row strong,.contact-row>span,.soundcloud-gate-copy,.soundcloud-head>span,.release-archive.reveal.visible,.release-archive:not(.reveal),.imprint-grid dt,.imprint-grid dd,.imprint-note,.footer-row>span,.photo-card figcaption,.lightbox-caption,.lightbox-counter,.lightbox-close,.lightbox-arrow,.menu-toggle b,.gallery-toggle b,.mobile-menu nav a small,.mobile-menu-footer{
+  filter:url(#preview-print-wear);-webkit-text-stroke:.22px currentColor;text-shadow:none!important
+}
+.social-link>span,.social-link>small,.nav-links a,.btn,.scroll-note,.release-meta:not(.reveal),.release-meta.reveal.visible,.streaming a,.gallery-toggle span,.epk-download,.previous-releases>summary,.soundcloud-head a,.soundcloud-load-btn,.imprint-link,.live-archive-link,.menu-toggle span{-webkit-text-stroke:.26px currentColor}
+@media(max-width:760px){
+.section-title,.release-title,.previous-release-title,.imprint-box h3{font-size:clamp(18px,5.1vw,24px)!important}
+.social-link{font-size:clamp(16px,4.6vw,20px)!important}
+.hero .actions .btn{font-size:11px!important}
+}
+
 </style>
 <!-- Syne Mono license:
 Copyright 2017 The Syne Project Authors (https://gitlab.com/bonjour-monde/fonderie/syne-typeface)
@@ -2912,6 +2943,14 @@ THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
       <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.3 0 0 0 -.28" result="ink"/>
       <feComposite in="rough" in2="ink" operator="in" result="worn"/>
       <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 .35 0" result="readableCore"/>
+      <feMerge><feMergeNode in="readableCore"/><feMergeNode in="worn"/></feMerge>
+    </filter>
+<filter id="heading-print-wear" x="-5%" y="-15%" width="110%" height="130%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency=".51" numOctaves="3" seed="21" result="grain"/>
+      <feDisplacementMap in="SourceGraphic" in2="grain" scale="1.65" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.3 0 0 0 -.28" result="ink"/>
+      <feComposite in="rough" in2="ink" operator="in" result="worn"/>
+      <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 .40 0" result="readableCore"/>
       <feMerge><feMergeNode in="readableCore"/><feMergeNode in="worn"/></feMerge>
     </filter></defs></svg>
 
