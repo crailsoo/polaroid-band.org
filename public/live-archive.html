@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
 <meta name="description" content="A chronological archive of POLARØID's past live shows.">
-<title>LIVE ARCHIVE / POLARØID</title>
+<title>POLARØID</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
 @font-face {
@@ -20,16 +20,15 @@
 *{box-sizing:border-box}
 html{background:#000}
 body{margin:0;background:#000;color:var(--paper);font-family:Arial,Helvetica,sans-serif;min-height:100vh;line-height:1.5}
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:3;background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.23) 100%)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 65% 48% at 50% 35%,rgba(126,50,38,.19) 0%,rgba(100,28,36,.13) 32%,rgba(111,47,26,.055) 57%,transparent 100%)}
+main{position:relative;z-index:1}
 a{color:inherit}
 a:focus-visible{outline:1px solid #ccc;outline-offset:7px}
 .back{display:inline-block;margin:34px 0 0 34px;text-decoration:none;font:11px/1.5 ui-monospace,monospace;letter-spacing:.13em;color:#aaa;position:relative;z-index:4}
 .back:hover{color:#fff}
 main{max-width:840px;margin:auto;padding:100px 30px 90px}
 header{text-align:center;margin:0 0 90px}
-.kicker{font:11px/1.5 ui-monospace,monospace;letter-spacing:.28em;color:#999;margin:0 0 22px}
 h1{font-family:"Polaroid Clear",Arial,sans-serif;font-size:clamp(2.3rem,7vw,5.3rem);font-weight:400;letter-spacing:.06em;line-height:1.12;margin:0;color:#e6e6e6}
-.subtitle{margin:22px 0 0;color:#999;font:11px/1.7 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
 .timeline{position:relative;list-style:none;padding:20px 0 35px;margin:0}
 .timeline::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:1px;background:linear-gradient(transparent,#555 7%,#333 92%,transparent)}
 .timeline li{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 58px minmax(0,1fr);min-height:174px;align-content:start;padding:35px 0}
@@ -40,9 +39,7 @@ h1{font-family:"Polaroid Clear",Arial,sans-serif;font-size:clamp(2.3rem,7vw,5.3r
 .record p{color:#999;font:11px/1.6 ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase;margin:9px 0 0}
 .timeline li:nth-child(even) time{grid-column:3;text-align:left}
 .timeline li:nth-child(even) .record{grid-column:1;text-align:right}
-.end{text-align:center;margin:30px 0 0;color:#888;font:10px/1.6 ui-monospace,monospace;letter-spacing:.22em}
 .note{text-align:center;font:11px/1.6 ui-monospace,monospace;color:#999;margin:20px auto 0;max-width:420px}
-footer{text-align:center;color:#888;font:10px/1.5 ui-monospace,monospace;letter-spacing:.16em;padding:20px 20px 44px}
 @keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 header,.timeline li{animation:appear 1.25s ease-out both}
 .timeline li:nth-child(2){animation-delay:.12s}.timeline li:nth-child(3){animation-delay:.24s}.timeline li:nth-child(4){animation-delay:.36s}
@@ -63,9 +60,7 @@ header{margin-bottom:66px}
 <a class="back" href="./#live">← BACK TO LIVE</a>
 <main>
   <header>
-    <p class="kicker">POLARØID / LIVE ARCHIVE</p>
-    <h1>After the noise.</h1>
-    <p class="subtitle">A record of what has been.</p>
+    <h1>POLARØID</h1>
   </header>
   <ol class="timeline" id="timeline" aria-label="Past live shows, oldest first">
       <li><time datetime="2026-06-27">27.06.2026</time><div class="record"><h2>Stadthalle Niebüll</h2><p>Niebüll</p></div></li>
@@ -73,10 +68,8 @@ header{margin-bottom:66px}
       <li><time datetime="2026-08-07">07.08.2026</time><div class="record"><h2>Silberhochzeit</h2><p>Klanxbüll</p></div></li>
       <li><time datetime="2026-08-09">09.08.2026</time><div class="record"><h2>Skandalös Festival</h2><p>Neukirchen</p></div></li>
   </ol>
-  <p class="end">• &nbsp; END OF RECORD &nbsp; •</p>
   <p class="note" id="archive-note" role="status" hidden></p>
 </main>
-<footer>POLARØID</footer>
 <script>
 (() => {
   const timeline=document.getElementById('timeline');
