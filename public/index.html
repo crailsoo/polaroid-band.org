@@ -2694,6 +2694,43 @@
     #live .show:hover { padding-left: 0; }
   }
 
+
+  /* Live schedule — isolated layout, consistent on desktop and mobile */
+  #live .live-schedule { display:grid; gap:42px; }
+  #live .live-group { padding:0; margin:0; border:0; min-width:0; }
+  #live .live-group-title { margin:0 0 14px; padding:0; font-family:var(--mono); font-size:.78rem; font-weight:700; letter-spacing:.1em; line-height:1.5; text-transform:uppercase; color:var(--acid); }
+  #live .live-archive .live-group-title { color:var(--violet); }
+  #live .live-list { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+  #live .live-event { position:relative; display:grid; grid-template-columns:minmax(116px, 145px) minmax(0,1fr) auto; align-items:center; column-gap:24px; row-gap:6px; min-width:0; padding:20px 22px; border:1px solid var(--line); background:rgba(236,236,231,.025); }
+  #live .live-event-next { border-left:3px solid var(--acid); background:rgba(200,255,0,.035); padding-left:20px; }
+  #live .live-event-next .live-date { color:var(--acid); }
+  #live .live-date { font-family:var(--mono); font-size:1rem; font-weight:700; color:var(--ink); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  #live .live-info { min-width:0; }
+  #live .live-name { margin:0; padding:0; color:var(--ink); font-family:var(--sans); font-weight:700; font-size:clamp(1rem,1.8vw,1.28rem); letter-spacing:0; line-height:1.4; overflow-wrap:anywhere; }
+  #live .live-name a { color:inherit; text-decoration:underline; text-decoration-color:var(--muted); text-underline-offset:.2em; }
+  #live .live-name a:hover, #live .live-name a:focus-visible { color:var(--acid); }
+  #live .live-place { display:block; margin-top:5px; font-size:.8rem; color:var(--muted); line-height:1.4; }
+  #live .live-time { font-family:var(--mono); font-size:.78rem; color:var(--acid); white-space:nowrap; text-align:right; }
+  #live .live-next-label { grid-column:1/-1; grid-row:1; color:var(--acid); font-size:.65rem; font-weight:700; letter-spacing:.1em; line-height:1.4; }
+  #live .live-archive .live-list { gap:0; border-top:1px solid var(--line); }
+  #live .live-archive .live-event { border:0; border-bottom:1px solid var(--line); background:none; padding:15px 0; grid-template-columns:minmax(116px,145px) minmax(0,1fr); }
+  #live .live-archive .live-date { color:var(--muted); font-size:.86rem; }
+  #live .live-archive .live-name { font-size:1rem; }
+  #live .live-archive .live-time, #live .live-archive .live-next-label { display:none; }
+  #live .live-empty { margin:0; color:var(--muted); padding:16px 0; }
+  @media(max-width:700px) {
+    #live .live-schedule { gap:30px; }
+    #live .live-event { grid-template-columns:minmax(0,1fr) auto; gap:10px 8px; padding:16px; }
+    #live .live-event-next { padding-left:14px; }
+    #live .live-info { grid-column:1/-1; grid-row:2; }
+    #live .live-time { grid-column:2; grid-row:1; font-size:.72rem; }
+    #live .live-event-next .live-date, #live .live-event-next .live-time { grid-row:2; }
+    #live .live-event-next .live-info { grid-row:3; }
+    #live .live-archive .live-event { grid-template-columns:96px minmax(0,1fr); column-gap:12px; align-items:start; }
+    #live .live-archive .live-info { grid-column:2; grid-row:1; }
+    #live .live-archive .live-date { padding-top:3px; }
+  }
+
 </style>
 </head>
 <body>
@@ -2821,63 +2858,72 @@
     <div class="container">
       <div class="section-label reveal left">02 / LIVE</div>
       <h2 class="section-title reveal up">Live<br>Shows.</h2>
-      <div class="shows reveal up reveal-delay-1">
-        <!-- Später einfach weitere .show-Blöcke hinzufügen -->
-        <div class="show next-show">
-          <div class="show-index">NEXT</div>
-          <div class="show-status upcoming">UPCOMING</div>
-          <div class="show-date">27.11.2026</div>
-          <div class="show-city">Niebüll</div>
-          <div class="show-venue">Hausmusikabend · Mensa der Friedrich-Paulsen-Schule</div>
-          <div class="ticket">19:00 UHR</div>
-        </div>
-
-        <div class="show">
-          <div class="show-index">006</div>
-          <div class="show-status upcoming">UPCOMING</div>
-          <div class="show-date">25.06.2027</div>
-          <div class="show-city">Ramstedt</div>
-          <div class="show-venue"><a href="https://www.instagram.com/hangundklang.festival/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline; text-underline-offset: .18em;">Hang &amp; Klang Festival</a></div>
-          <div class="ticket">16:00–17:00 UHR</div>
-        </div>
-
-        <div class="show played-show">
-          <div class="show-index">004</div>
-          <div class="show-status played">PLAYED</div>
-          <div class="show-date">09.08.2026</div>
-          <div class="show-city">Neukirchen</div>
-          <div class="show-venue">Skandalös Festival</div>
-          <div class="ticket">PAST SHOW</div>
-        </div>
-
-        <div class="show played-show">
-          <div class="show-index">003</div>
-          <div class="show-status played">PLAYED</div>
-          <div class="show-date">07.08.2026</div>
-          <div class="show-city">Klanxbüll</div>
-          <div class="show-venue">Silberhochzeit</div>
-          <div class="ticket">PAST SHOW</div>
-        </div>
-
-        <div class="show played-show">
-          <div class="show-index">002</div>
-          <div class="show-status played">PLAYED</div>
-          <div class="show-date">01.07.2026</div>
-          <div class="show-city">Niebüll</div>
-          <div class="show-venue">Friedrich-Paulsen-Schule</div>
-          <div class="ticket">PAST SHOW</div>
-        </div>
-
-        <div class="show played-show">
-          <div class="show-index">001</div>
-          <div class="show-status played">PLAYED</div>
-          <div class="show-date">27.06.2026</div>
-          <div class="show-city">Niebüll</div>
-          <div class="show-venue">Stadhalle Niebüll</div>
-          <div class="ticket">PAST SHOW</div>
-        </div>
-
-        <!-- Weitere bereits gespielte Shows können direkt unter diesem Block ergänzt werden. -->
+      <div class="live-schedule reveal up reveal-delay-1">
+        <section class="live-group" aria-labelledby="live-upcoming-title">
+          <h3 class="live-group-title" id="live-upcoming-title">Upcoming shows</h3>
+          <ul class="live-list" id="live-upcoming">
+          <li class="live-event live-event-next" data-date="2026-11-27">
+            <time class="live-date" datetime="2026-11-27">27.11.2026</time>
+            <div class="live-info">
+              <h4 class="live-name">Hausmusikabend · Mensa der Friedrich-Paulsen-Schule</h4>
+              <span class="live-place">Niebüll</span>
+            </div>
+            <span class="live-time">19:00 UHR</span>
+            <span class="live-next-label">NEXT SHOW</span>
+          </li>
+          <li class="live-event" data-date="2027-06-25">
+            <time class="live-date" datetime="2027-06-25">25.06.2027</time>
+            <div class="live-info">
+              <h4 class="live-name"><a href="https://www.instagram.com/hangundklang.festival/" target="_blank" rel="noopener noreferrer">Hang &amp; Klang Festival</a></h4>
+              <span class="live-place">Ramstedt</span>
+            </div>
+            <span class="live-time">16:00–17:00 UHR</span>
+            
+          </li>
+          </ul>
+          <p class="live-empty" id="live-empty" hidden>No upcoming shows announced yet.</p>
+        </section>
+        <section class="live-group live-archive" aria-labelledby="live-archive-title">
+          <h3 class="live-group-title" id="live-archive-title">Past shows</h3>
+          <ul class="live-list" id="live-archive">
+          <li class="live-event" data-date="2026-08-09">
+            <time class="live-date" datetime="2026-08-09">09.08.2026</time>
+            <div class="live-info">
+              <h4 class="live-name">Skandalös Festival</h4>
+              <span class="live-place">Neukirchen</span>
+            </div>
+            
+            
+          </li>
+          <li class="live-event" data-date="2026-08-07">
+            <time class="live-date" datetime="2026-08-07">07.08.2026</time>
+            <div class="live-info">
+              <h4 class="live-name">Silberhochzeit</h4>
+              <span class="live-place">Klanxbüll</span>
+            </div>
+            
+            
+          </li>
+          <li class="live-event" data-date="2026-07-01">
+            <time class="live-date" datetime="2026-07-01">01.07.2026</time>
+            <div class="live-info">
+              <h4 class="live-name">Friedrich-Paulsen-Schule</h4>
+              <span class="live-place">Niebüll</span>
+            </div>
+            
+            
+          </li>
+          <li class="live-event" data-date="2026-06-27">
+            <time class="live-date" datetime="2026-06-27">27.06.2026</time>
+            <div class="live-info">
+              <h4 class="live-name">Stadthalle Niebüll</h4>
+              <span class="live-place">Niebüll</span>
+            </div>
+            
+            
+          </li>
+          </ul>
+        </section>
       </div>
     </div>
   </section>
@@ -3290,6 +3336,38 @@
     });
   }
 
+
+  // Keep the live schedule current using the festival's local calendar date.
+  (() => {
+    const upcoming = document.getElementById('live-upcoming');
+    const archive = document.getElementById('live-archive');
+    if (!upcoming || !archive) return;
+    const formatter = new Intl.DateTimeFormat('en-CA', {timeZone:'Europe/Berlin',year:'numeric',month:'2-digit',day:'2-digit'});
+    const refresh = () => {
+      const p = Object.fromEntries(formatter.formatToParts(new Date()).map(v => [v.type,v.value]));
+      const today = p.year + '-' + p.month + '-' + p.day;
+      const events = [...upcoming.children, ...archive.children].filter(el => el.dataset.date);
+      events.sort((a,b) => a.dataset.date.localeCompare(b.dataset.date));
+      const future = events.filter(el => el.dataset.date >= today);
+      const past = events.filter(el => el.dataset.date < today).reverse();
+      events.forEach(el => {
+        el.classList.remove('live-event-next');
+        el.querySelector('.live-next-label')?.remove();
+      });
+      future.forEach(el => upcoming.appendChild(el));
+      past.forEach(el => archive.appendChild(el));
+      if (future.length) {
+        future[0].classList.add('live-event-next');
+        const label = document.createElement('span');
+        label.className = 'live-next-label';
+        label.textContent = 'NEXT SHOW';
+        future[0].appendChild(label);
+      }
+      document.getElementById('live-empty').hidden = future.length !== 0;
+    };
+    refresh();
+    window.setInterval(refresh, 60000);
+  })();
 </script>
 </body>
 </html>
