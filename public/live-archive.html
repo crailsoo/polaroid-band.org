@@ -206,45 +206,81 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 (() => {
   const timeline=document.getElementById('timeline');
   const note=document.getElementById('archive-note');
+  const savedEvents=[
+  {
+    "date": "2026-06-27",
+    "name": "Stadthalle Niebüll",
+    "place": "Niebüll"
+  },
+  {
+    "date": "2026-07-01",
+    "name": "Friedrich-Paulsen-Schule",
+    "place": "Niebüll"
+  },
+  {
+    "date": "2026-08-07",
+    "name": "Silberhochzeit",
+    "place": "Klanxbüll"
+  },
+  {
+    "date": "2026-08-09",
+    "name": "Skandalös Festival",
+    "place": "Neukirchen"
+  },
+  {
+    "date": "2026-11-27",
+    "name": "Hausmusikabend · Mensa der Friedrich-Paulsen-Schule",
+    "place": "Niebüll"
+  },
+  {
+    "date": "2027-06-25",
+    "name": "Hang & Klang Festival",
+    "place": "Ramstedt"
+  }
+];
   const formatter=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Berlin',year:'numeric',month:'2-digit',day:'2-digit'});
   const today=()=>{const p=Object.fromEntries(formatter.formatToParts(new Date()).map(v=>[v.type,v.value]));return p.year+'-'+p.month+'-'+p.day;};
+  const render=events=>{
+    const cutoff=today();
+    const past=events.filter(el=>el.date<cutoff).sort((a,b)=>a.date.localeCompare(b.date));
+    const fragment=document.createDocumentFragment();
+    let previousMonth='',previousYear='';
+    const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    past.forEach(el=>{
+      const li=document.createElement('li');
+      const time=document.createElement('time');
+      const date=el.date,month=date.slice(0,7),year=date.slice(0,4);
+      time.dateTime=date;
+      time.textContent=months[Number(date.slice(5,7))-1]+' '+date.slice(8,10);
+      time.title=date;
+      time.setAttribute('aria-label',date);
+      if(previousMonth && month!==previousMonth) li.classList.add('month-start');
+      if(previousYear && year!==previousYear){li.classList.add('year-start');li.dataset.year=year;}
+      previousMonth=month;previousYear=year;
+      const record=document.createElement('div');record.className='record';
+      const title=document.createElement('h2');title.textContent=el.name;
+      const place=document.createElement('p');place.textContent=el.place;
+      record.append(title,place);li.append(time,record);fragment.append(li);
+    });
+    timeline.replaceChildren(fragment);
+    note.hidden=!!past.length;
+    note.textContent=past.length?'':'No past shows yet.';
+  };
+  let events=savedEvents;
+  render(events);
   const update=async()=>{
     try{
       const response=await fetch('./index.html',{cache:'no-cache'});
       if(!response.ok)throw new Error('archive source unavailable');
       const doc=new DOMParser().parseFromString(await response.text(),'text/html');
-      const all=[...doc.querySelectorAll('#live .live-event[data-date]')];
+      const all=[...doc.querySelectorAll('#live .live-event[data-date]')].map(el=>({date:el.dataset.date,name:el.querySelector('.live-name')?.textContent.trim()||'Live show',place:el.querySelector('.live-place')?.textContent.trim()||''})).filter(el=>/^\d{4}-\d{2}-\d{2}$/.test(el.date));
       if(!all.length)throw new Error('archive source missing');
-      const past=all.filter(el=>el.dataset.date<today()).sort((a,b)=>a.dataset.date.localeCompare(b.dataset.date));
-      const fragment=document.createDocumentFragment();
-      let previousMonth='';
-      let previousYear='';
-      const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-      past.forEach(el=>{
-        const li=document.createElement('li');
-        const time=document.createElement('time');
-        time.dateTime=el.dataset.date;
-        const date=el.dataset.date;
-        const month=date.slice(0,7);
-        const year=date.slice(0,4);
-        time.textContent=months[Number(date.slice(5,7))-1]+' '+date.slice(8,10);
-        time.title=date;
-        time.setAttribute('aria-label',date);
-        if(previousMonth && month!==previousMonth) li.classList.add('month-start');
-        if(previousYear && year!==previousYear){li.classList.add('year-start');li.dataset.year=year;}
-        previousMonth=month;
-        previousYear=year;
-        const record=document.createElement('div');record.className='record';
-        const title=document.createElement('h2');title.textContent=el.querySelector('.live-name')?.textContent.trim()||'Live show';
-        const place=document.createElement('p');place.textContent=el.querySelector('.live-place')?.textContent.trim()||'';
-        record.append(title,place);li.append(time,record);fragment.append(li);
-      });
-      timeline.replaceChildren(fragment);
-      note.hidden=!!past.length;
-      note.textContent=past.length?'':'No past shows yet.';
-    }catch(e){note.textContent='Showing the saved archive. Latest updates are temporarily unavailable.';note.hidden=false;}
+      events=all;
+      render(events);
+    }catch(e){render(events);}
   };
   update();
+  window.setInterval(()=>render(events),60000);
 })();
 </script>
 </body>
