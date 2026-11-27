@@ -2731,6 +2731,12 @@
     #live .live-archive .live-date { padding-top:3px; }
   }
 
+
+  #live .live-archive-heading { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px; }
+  #live .live-archive-heading .live-group-title { margin:0; }
+  #live .live-archive-link { color:var(--muted); font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-decoration:none; text-transform:uppercase; padding:4px 0; border-bottom:1px solid var(--line); }
+  #live .live-archive-link:hover, #live .live-archive-link:focus-visible { color:var(--violet); border-color:var(--violet); }
+
 </style>
 </head>
 <body>
@@ -2884,7 +2890,10 @@
           <p class="live-empty" id="live-empty" hidden>No upcoming shows announced yet.</p>
         </section>
         <section class="live-group live-archive" aria-labelledby="live-archive-title">
-          <h3 class="live-group-title" id="live-archive-title">Past shows</h3>
+          <div class="live-archive-heading">
+            <h3 class="live-group-title" id="live-archive-title">Past shows</h3>
+            <a class="live-archive-link" href="live-archive.html">Live archive ↗</a>
+          </div>
           <ul class="live-list" id="live-archive">
           <li class="live-event" data-date="2026-08-09">
             <time class="live-date" datetime="2026-08-09">09.08.2026</time>
